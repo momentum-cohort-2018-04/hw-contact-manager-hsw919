@@ -14,11 +14,13 @@ class App extends Component {
       password: localStorage.password
     }
 
-    this.submit = this.submit.bind(this)
+    this.updateState = this.updateState.bind(this)
   }
 
-  submit (e) {
-    e.preventDefault()
+  updateState (e) {
+    if (e) {
+      e.preventDefault()
+    }
     this.setState({
       username: localStorage.username,
       password: localStorage.password
@@ -30,7 +32,7 @@ class App extends Component {
       return (
         <div className='App'>
           <div className='container'>
-            <Contacts username={this.state.username} password={this.state.password} />
+            <Contacts username={this.state.username} password={this.state.password} clear={this.updateState} />
           </div>
         </div>
       )
@@ -38,7 +40,7 @@ class App extends Component {
       return (
         <div className='App'>
           <div className='container'>
-            <Login submit={this.submit} />
+            <Login submit={this.updateState} />
           </div>
         </div>
       )

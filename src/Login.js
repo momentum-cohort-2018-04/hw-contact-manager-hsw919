@@ -20,10 +20,10 @@ class Login extends Component {
   }
 
   render () {
-    let submit = this.props.submit
+    let updateState = this.props.submit
     return (
       <div className='Login'>
-        <form id='submit' onSubmit={submit}>
+        <form id='submit' onSubmit={updateState}>
           <div className='input-field'>
             <label>Username</label>
             <input type='text' onChange={this.handleUsername} />

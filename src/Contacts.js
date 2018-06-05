@@ -14,6 +14,7 @@ class Contacts extends Component {
   }
 
   componentDidMount () {
+    const updateState = this.props.clear
     const username = this.props.username
     const password = this.props.password
     console.log(username)
@@ -25,6 +26,12 @@ class Contacts extends Component {
         this.setState({
           array: res.body
         })
+      })
+      .catch((err) => {
+        if (err.status === 401) {
+          localStorage.clear()
+          updateState()
+        }
       })
   }
 
