@@ -209,8 +209,6 @@ class Contacts extends Component {
         </div>
       )
     } else if (this.state.editContact) {
-      // console.log(this.state.editContactInfo.name)
-      // const editContact = this.state.editContactInfo
       return (
         <div className='Contacts'>
           <div className='container'>
@@ -249,11 +247,26 @@ class Contacts extends Component {
           </div>
         </div>
       )
+    } else if (this.state.search) {
+      const filteredArray = this.state.array.filter(contact => contact.name.toLowerCase().includes(this.state.search.toLowerCase()))
+      return (
+        <div className='Contacts'>
+          <div className='container'>
+            <input type='text' onChange={this.search} />
+            <button onClick={this.addContact}>Add Contact</button>
+            {filteredArray.map((contact, idx) => (
+              <div key={idx}>
+                <Contact contact={contact} delete={this.delete} edit={this.edit} />
+              </div>
+            ))}
+          </div>
+        </div>
+      )
     } else {
       return (
         <div className='Contacts'>
           <div className='container'>
-            {/* <input type='text' onChange={this.search} /> */}
+            <input type='text' onChange={this.search} />
             <button onClick={this.addContact}>Add Contact</button>
             {this.state.array.map((contact, idx) => (
               <div key={idx}>
