@@ -13,6 +13,14 @@ class Contacts extends Component {
       array: [],
       search: '',
       addContact: false,
+      editContact: false,
+      editName: '',
+      editEmail: '',
+      editAddress: '',
+      editBirthday: '',
+      editCompany: '',
+      editTitle: '',
+      editId: '',
       name: '',
       email: '',
       address: '',
@@ -25,6 +33,8 @@ class Contacts extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.submitContact = this.submitContact.bind(this)
     this.delete = this.delete.bind(this)
+    this.edit = this.edit.bind(this)
+    this.submitEdit = this.submitEdit.bind(this)
   }
 
   componentDidMount () {
@@ -65,7 +75,13 @@ class Contacts extends Component {
         .auth(localStorage.username, localStorage.password)
         .send({
           id: uuid(),
-          name: this.state.name
+          name: this.state.name,
+          email: this.state.email,
+          number: this.state.number,
+          address: this.state.address,
+          birthday: this.state.birthday,
+          company: this.state.company,
+          title: this.state.title
         })
         .then(res => {
           const newContact = res.body
@@ -79,6 +95,56 @@ class Contacts extends Component {
     } else {
 
     }
+  }
+
+  edit (e) {
+    this.setState({
+      editContact: true
+    })
+    this.state.array.map((contact) => {
+      if (e.target.name === contact.id) {
+        this.setState({
+          editName: contact.name,
+          editEmail: contact.email,
+          editNumber: contact.number,
+          editAddress: contact.address,
+          editBirthday: contact.birthday,
+          editCompany: contact.company,
+          editTitle: contact.title,
+          editId: contact.id
+        })
+      }
+    })
+  }
+
+  submitEdit (e) {
+    e.preventDefault()
+    const body = {
+      id: this.state.editId,
+      name: this.state.editName,
+      email: this.state.editEmail,
+      number: this.state.editNumber,
+      address: this.state.editAddress,
+      birthday: this.state.editBirthday,
+      company: this.state.editCompany,
+      title: this.state.editTitle
+    }
+    console.log(this.state.editId)
+    request
+      .put(`http://localhost:8000/contacts/${this.state.editId}`)
+      .auth(localStorage.username, localStorage.password)
+      .send(body)
+      .then(res => {
+        const idx = this.state.array.findIndex((entry) => entry.id === this.state.editId)
+        const newArray = this.state.array
+        newArray.splice(idx, 1, body)
+        this.setState({
+          array: newArray
+        })
+      })
+    this.setState({
+      editContact: false
+    })
   }
 
   delete (e) {
@@ -103,21 +169,7 @@ class Contacts extends Component {
   }
 
   render () {
-    if (this.state.addContact === false) {
-      return (
-        <div className='Contacts'>
-          <div className='container'>
-            {/* <input type='text' onChange={this.search} /> */}
-            <button onClick={this.addContact}>Add Contact</button>
-            {this.state.array.map((contact, idx) => (
-              <div key={idx}>
-                <Contact contact={contact} delete={this.delete} />
-              </div>
-            ))}
-          </div>
-        </div>
-      )
-    } else {
+    if (this.state.addContact) {
       return (
         <div className='Contacts'>
           <div className='container'>
@@ -153,6 +205,61 @@ class Contacts extends Component {
               </div>
               <button type='submit'>Add</button>
             </form>
+          </div>
+        </div>
+      )
+    } else if (this.state.editContact) {
+      // console.log(this.state.editContactInfo.name)
+      // const editContact = this.state.editContactInfo
+      return (
+        <div className='Contacts'>
+          <div className='container'>
+            <form onSubmit={this.submitEdit}>
+              <h1>Edit Contact</h1>
+              <div className='input-field'>
+                <label>Name(required)</label>
+                <input type='text' name='editName' onChange={this.handleChange} value={this.state.editName} />
+              </div>
+              <div className='input-field'>
+                <label>Email</label>
+                <input type='email' name='editEmail' onChange={this.handleChange} value={this.state.editEmail} />
+              </div>
+              <div className='input-field'>
+                <label>Number</label>
+                <input type='tel' name='editNumber' onChange={this.handleChange} value={this.state.editNumber} />
+              </div>
+              <div className='input-field'>
+                <label>Address</label>
+                <input type='text' name='editAddress' onChange={this.handleChange} value={this.state.editAddress} />
+              </div>
+              <div className='input-field'>
+                <label>Birthday</label>
+                <input type='date' name='editBirthday' onChange={this.handleChange} value={this.state.editBirthday} />
+              </div>
+              <div className='input-field'>
+                <label>Company</label>
+                <input type='text' name='editCompany' onChange={this.handleChange} value={this.state.editCompany} />
+              </div>
+              <div className='input-field'>
+                <label>Title</label>
+                <input type='text' name='editTitle' onChange={this.handleChange} value={this.state.editTitle} />
+              </div>
+              <button type='submit'>Edit</button>
+            </form>
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <div className='Contacts'>
+          <div className='container'>
+            {/* <input type='text' onChange={this.search} /> */}
+            <button onClick={this.addContact}>Add Contact</button>
+            {this.state.array.map((contact, idx) => (
+              <div key={idx}>
+                <Contact contact={contact} delete={this.delete} edit={this.edit} />
+              </div>
+            ))}
           </div>
         </div>
       )
