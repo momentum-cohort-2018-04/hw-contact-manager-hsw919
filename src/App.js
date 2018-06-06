@@ -32,7 +32,7 @@ class App extends Component {
       return (
         <div className='App'>
           <div className='container'>
-            <Contacts username={this.state.username} password={this.state.password} clear={this.updateState} />
+            <Contacts clear={this.updateState} />
           </div>
         </div>
       )
