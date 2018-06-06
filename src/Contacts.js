@@ -24,6 +24,7 @@ class Contacts extends Component {
     this.addContact = this.addContact.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.submitContact = this.submitContact.bind(this)
+    this.delete = this.delete.bind(this)
   }
 
   componentDidMount () {
@@ -76,8 +77,22 @@ class Contacts extends Component {
         addContact: false
       })
     } else {
-      
+
     }
+  }
+
+  delete (e) {
+    const id = e.target.name
+    request
+      .delete(`http://localhost:8000/contacts/${id}`)
+      .auth(localStorage.username, localStorage.password)
+      .then(res => {
+        let deletedArray = this.state.array
+        deletedArray = deletedArray.filter(contact => contact.id !== id)
+        this.setState({
+          array: deletedArray
+        })
+      })
   }
 
   handleChange (e) {
@@ -96,7 +111,7 @@ class Contacts extends Component {
             <button onClick={this.addContact}>Add Contact</button>
             {this.state.array.map((contact, idx) => (
               <div key={idx}>
-                <Contact contact={contact} />
+                <Contact contact={contact} delete={this.delete} />
               </div>
             ))}
           </div>
