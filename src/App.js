@@ -1,21 +1,135 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+/* global localStorage */
+
+import React, { Component } from 'react'
+// import request from 'superagent'
+import './App.css'
+import Login from './Login'
+import Contacts from './Contacts'
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+  constructor () {
+    super()
+    this.state = {
+      username: localStorage.username,
+      password: localStorage.password
+    }
+
+    this.updateState = this.updateState.bind(this)
+  }
+
+  updateState (e) {
+    if (e) {
+      e.preventDefault()
+    }
+    this.setState({
+      username: localStorage.username,
+      password: localStorage.password
+    })
+  }
+
+  render () {
+    if (this.state.username && this.state.password) {
+      return (
+        <div className='App'>
+          <header>
+            <h1 className='title'>Contacts</h1>
+          </header>
+          <div className='container'>
+            <Contacts clear={this.updateState} />
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <div className='App'>
+          <header>
+            <h1 className='title'>Contacts</h1>
+          </header>
+          <div className='container'>
+            <Login submit={this.updateState} />
+          </div>
+        </div>
+      )
+    }
   }
 }
 
-export default App;
+export default App
+
+// class App extends Component {
+//   constructor () {
+//     super()
+//     this.state = {
+//       username: localStorage.username,
+//       password: localStorage.password
+//     }
+
+//     this.handleUsername = this.handleUsername.bind(this)
+//     this.handlePassword = this.handlePassword.bind(this)
+//     this.auth = this.auth.bind(this)
+//     this.clearStorage = this.clearStorage.bind(this)
+//   }
+
+//   auth (e) {
+//     e.preventDefault()
+//     this.setState({
+//       username: localStorage.username,
+//       password: localStorage.password
+//     })
+//     request
+//       .get('http://localhost:8000/contacts')
+//       .auth('hunter', 'hi')
+//       .then(res => {
+//         console.log(res)
+//       })
+//   }
+
+//   clearStorage () {
+//     localStorage.clear()
+//     this.setState({
+//       username: localStorage.username,
+//       password: localStorage.password
+//     })
+//   }
+
+//   handleUsername (e) {
+//     localStorage.username = e.target.value
+//   }
+
+//   handlePassword (e) {
+//     localStorage.password = e.target.value
+//   }
+
+//   render () {
+//     if (this.state.username && this.state.password) {
+//       return (
+//         <div className='App'>
+//           <div className='container'>
+//             <button onClick={this.clearStorage}>clear</button>
+//           </div>
+//         </div>
+//       )
+//     } else {
+//       return (
+//         <div className='App'>
+//           <div className='container'>
+//             {/* <Login /> */}
+//             <form id='submit' onSubmit={this.auth}>
+//               <div className='input-field'>
+//                 <label>Username</label>
+//                 <input type='text' onChange={this.handleUsername} />
+//               </div>
+//               <div className='input-field'>
+//                 <label>Password</label>
+//                 <input type='password' onChange={this.handlePassword} />
+//               </div>
+//               <button type='submit'>Login</button>
+//             </form>
+//           </div>
+//         </div>
+//       )
+//     }
+//   }
+// }
+
+// export default App
