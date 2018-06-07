@@ -93,7 +93,11 @@ class Contacts extends Component {
         addContact: false
       })
     } else {
-
+      let name = document.createElement('p')
+      name.classList.add('text-danger')
+      name.innerText = 'Name is required'
+      document.querySelector('.name').classList.add('input-invalid')
+      document.querySelector('.name').append(name)
     }
   }
 
@@ -175,7 +179,7 @@ class Contacts extends Component {
           <div className='container'>
             <form onSubmit={this.submitContact}>
               <h1>Add Contact</h1>
-              <div className='input-field'>
+              <div className='input-field name'>
                 <label>Name(required)</label>
                 <input type='text' name='name' onChange={this.handleChange} />
               </div>
@@ -242,7 +246,7 @@ class Contacts extends Component {
                 <label>Title</label>
                 <input type='text' name='editTitle' onChange={this.handleChange} value={this.state.editTitle} />
               </div>
-              <button type='submit'>Edit</button>
+              <button type='submit'>Save</button>
             </form>
           </div>
         </div>
@@ -252,8 +256,10 @@ class Contacts extends Component {
       return (
         <div className='Contacts'>
           <div className='container'>
-            <input type='text' onChange={this.search} />
-            <button onClick={this.addContact}>Add Contact</button>
+            <div className='add'>
+              <button onClick={this.addContact} className='button-dark'>Add Contact</button>
+            </div>
+            <input type='text' onChange={this.search} placeholder='Search for contacts...' />
             {filteredArray.map((contact, idx) => (
               <div key={idx}>
                 <Contact contact={contact} delete={this.delete} edit={this.edit} />
@@ -266,8 +272,10 @@ class Contacts extends Component {
       return (
         <div className='Contacts'>
           <div className='container'>
-            <input type='text' onChange={this.search} />
-            <button onClick={this.addContact}>Add Contact</button>
+            <div className='add'>
+              <button onClick={this.addContact} className='button-dark'>Add Contact</button>
+            </div>
+            <input type='text' onChange={this.search} placeholder='Search for contacts...' />
             {this.state.array.map((contact, idx) => (
               <div key={idx}>
                 <Contact contact={contact} delete={this.delete} edit={this.edit} />

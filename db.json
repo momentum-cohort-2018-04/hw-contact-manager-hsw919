@@ -1,45 +1,10 @@
 {
   "contacts": [
     {
-      "id": "8e39c877-4438-4882-981f-545e86fd1971",
-      "name": "hunter",
-      "email": "",
-      "address": "",
-      "birthday": "",
-      "company": "",
-      "title": ""
-    },
-    {
-      "id": "fadefbed-dc74-4e07-914a-a6b76fcf89d1",
-      "name": "kelly",
-      "email": "",
-      "address": "",
-      "birthday": "",
-      "company": "",
-      "title": ""
-    },
-    {
-      "id": "71d1aa31-f5c7-4e39-ac4f-cff1b808bd54",
-      "name": "Erika",
-      "email": "",
-      "address": "",
-      "birthday": "",
-      "company": "",
-      "title": ""
-    },
-    {
-      "id": "37e574c8-8ec0-46f9-8504-dc2af727f315",
-      "name": "john",
-      "email": "",
-      "address": "",
-      "birthday": "",
-      "company": "",
-      "title": ""
-    },
-    {
-      "id": "82f3913a-90ee-49fc-b197-c6eacc3519ec",
-      "name": "jordan",
-      "email": "",
+      "id": "6db55a6e-8b7a-4a66-8d0d-daddb161e4ec",
+      "name": "Hunter",
+      "email": "hunterwoody@gmail.com",
+      "number": "919-xxx-xxxx",
       "address": "",
       "birthday": "",
       "company": "",

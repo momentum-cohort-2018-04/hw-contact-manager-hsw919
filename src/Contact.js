@@ -12,9 +12,13 @@ class Contact extends Component {
     const contact = this.props.contact
     return (
       <div className='Contact'>
-        <h1>{contact.name}</h1>
-        <h2>{contact.email}</h2>
-        <h3>{contact.address}</h3>
+        <h1 className='contact-name'>{contact.name}</h1>
+        <h5><span>Email: </span>{contact.email}</h5>
+        <h5><span>Number: </span>{contact.number}</h5>
+        <h5><span>Address: </span>{contact.address}</h5>
+        <h5><span>Birthday: </span>{contact.birthday}</h5>
+        <h5><span>Company: </span>{contact.company}</h5>
+        <h5 className='last'><span>Title: </span>{contact.title}</h5>
         <button className='button-danger' onClick={deleteContact} name={contact.id} >Delete</button>
         <button onClick={editContact} name={contact.id}>Edit</button>
       </div>

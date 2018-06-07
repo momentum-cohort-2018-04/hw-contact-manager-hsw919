@@ -31,6 +31,9 @@ class App extends Component {
     if (this.state.username && this.state.password) {
       return (
         <div className='App'>
+          <header>
+            <h1 className='title'>Contacts</h1>
+          </header>
           <div className='container'>
             <Contacts clear={this.updateState} />
           </div>
@@ -39,6 +42,9 @@ class App extends Component {
     } else {
       return (
         <div className='App'>
+          <header>
+            <h1 className='title'>Contacts</h1>
+          </header>
           <div className='container'>
             <Login submit={this.updateState} />
           </div>
